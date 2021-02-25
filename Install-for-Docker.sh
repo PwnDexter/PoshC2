@@ -78,19 +78,19 @@ rm -f /usr/local/bin/posh-docker-clean
 rm -f /usr/local/bin/posh-stop-server
 rm -f /usr/local/bin/posh-docker-debug
 rm -f /usr/local/bin/sharpsocks
-curl https://raw.githubusercontent.com/nettitude/PoshC2/$GIT_BRANCH/resources/scripts/_posh-common -o /usr/local/bin/_posh-common >/dev/null
-curl https://raw.githubusercontent.com/nettitude/PoshC2/$GIT_BRANCH/resources/scripts/fpc -o /usr/local/bin/fpc >/dev/null
-curl https://raw.githubusercontent.com/nettitude/PoshC2/$GIT_BRANCH/resources/scripts/posh-docker -o /usr/local/bin/posh >/dev/null
-curl https://raw.githubusercontent.com/nettitude/PoshC2/$GIT_BRANCH/resources/scripts/posh-docker-server -o /usr/local/bin/posh-server >/dev/null
-curl https://raw.githubusercontent.com/nettitude/PoshC2/$GIT_BRANCH/resources/scripts/posh-config -o /usr/local/bin/posh-config >/dev/null
-curl https://raw.githubusercontent.com/nettitude/PoshC2/$GIT_BRANCH/resources/scripts/posh-log -o /usr/local/bin/posh-log >/dev/null
-curl https://raw.githubusercontent.com/nettitude/PoshC2/$GIT_BRANCH/resources/scripts/posh-service -o /usr/local/bin/posh-service >/dev/null
-curl https://raw.githubusercontent.com/nettitude/PoshC2/$GIT_BRANCH/resources/scripts/posh-stop-service -o /usr/local/bin/posh-stop-service >/dev/null
-curl https://raw.githubusercontent.com/nettitude/PoshC2/$GIT_BRANCH/resources/scripts/posh-project -o /usr/local/bin/posh-project >/dev/null
-curl https://raw.githubusercontent.com/nettitude/PoshC2/$GIT_BRANCH/resources/scripts/posh-docker-clean -o /usr/local/bin/posh-docker-clean >/dev/null
-curl https://raw.githubusercontent.com/nettitude/PoshC2/$GIT_BRANCH/resources/scripts/posh-docker-stop-server -o /usr/local/bin/posh-stop-server >/dev/null
-curl https://raw.githubusercontent.com/nettitude/PoshC2/$GIT_BRANCH/resources/scripts/posh-docker-debug -o /usr/local/bin/posh-docker-debug >/dev/null
-curl https://raw.githubusercontent.com/nettitude/PoshC2/$GIT_BRANCH/resources/scripts/sharpsocks-docker -o /usr/local/bin/sharpsocks >/dev/null
+curl https://raw.githubusercontent.com/pwndexter/PoshC2/$GIT_BRANCH/resources/scripts/_posh-common -o /usr/local/bin/_posh-common >/dev/null
+curl https://raw.githubusercontent.com/pwndexter/PoshC2/$GIT_BRANCH/resources/scripts/fpc -o /usr/local/bin/fpc >/dev/null
+curl https://raw.githubusercontent.com/pwndexter/PoshC2/$GIT_BRANCH/resources/scripts/posh-docker -o /usr/local/bin/posh >/dev/null
+curl https://raw.githubusercontent.com/pwndexter/PoshC2/$GIT_BRANCH/resources/scripts/posh-docker-server -o /usr/local/bin/posh-server >/dev/null
+curl https://raw.githubusercontent.com/pwndexter/PoshC2/$GIT_BRANCH/resources/scripts/posh-config -o /usr/local/bin/posh-config >/dev/null
+curl https://raw.githubusercontent.com/pwndexter/PoshC2/$GIT_BRANCH/resources/scripts/posh-log -o /usr/local/bin/posh-log >/dev/null
+curl https://raw.githubusercontent.com/pwndexter/PoshC2/$GIT_BRANCH/resources/scripts/posh-service -o /usr/local/bin/posh-service >/dev/null
+curl https://raw.githubusercontent.com/pwndexter/PoshC2/$GIT_BRANCH/resources/scripts/posh-stop-service -o /usr/local/bin/posh-stop-service >/dev/null
+curl https://raw.githubusercontent.com/pwndexter/PoshC2/$GIT_BRANCH/resources/scripts/posh-project -o /usr/local/bin/posh-project >/dev/null
+curl https://raw.githubusercontent.com/pwndexter/PoshC2/$GIT_BRANCH/resources/scripts/posh-docker-clean -o /usr/local/bin/posh-docker-clean >/dev/null
+curl https://raw.githubusercontent.com/pwndexter/PoshC2/$GIT_BRANCH/resources/scripts/posh-docker-stop-server -o /usr/local/bin/posh-stop-server >/dev/null
+curl https://raw.githubusercontent.com/pwndexter/PoshC2/$GIT_BRANCH/resources/scripts/posh-docker-debug -o /usr/local/bin/posh-docker-debug >/dev/null
+curl https://raw.githubusercontent.com/pwndexter/PoshC2/$GIT_BRANCH/resources/scripts/sharpsocks-docker -o /usr/local/bin/sharpsocks >/dev/null
 chmod +x /usr/local/bin/fpc
 chmod +x /usr/local/bin/posh
 chmod +x /usr/local/bin/posh-server
@@ -118,10 +118,10 @@ else
 fi
 
 mkdir -p "$POSH_PROJECTS_DIR"
-curl https://raw.githubusercontent.com/nettitude/PoshC2/$GIT_BRANCH/resources/config-template.yml -o "$POSH_PROJECTS_DIR/config-template.yml" >/dev/null
+curl https://raw.githubusercontent.com/pwndexter/PoshC2/$GIT_BRANCH/resources/config-template.yml -o "$POSH_PROJECTS_DIR/config-template.yml" >/dev/null
 
 if [ ! $IS_MAC ]; then
-    curl https://raw.githubusercontent.com/nettitude/PoshC2/$GIT_BRANCH/resources/scripts/poshc2.service -o /lib/systemd/system/poshc2.service >/dev/null
+    curl https://raw.githubusercontent.com/pwndexter/PoshC2/$GIT_BRANCH/resources/scripts/poshc2.service -o /lib/systemd/system/poshc2.service >/dev/null
 fi
 
 echo ""

@@ -186,12 +186,23 @@ def do_exit(user, command, randomuri):
     return do_kill_implant(user, command, randomuri)
 
 
+def python_prep_module(module_name, params):
+    module = open(f"{ModulesDirectory}{module_name}.py", 'rb').read()
+    encoded_module = base64.b64encode(module).decode("utf-8")
+    return f"{module_name} -pycode {encoded_module} {params}"
+
+
 def do_linuxprivchecker(user, command, randomuri):
     params = re.compile("linuxprivchecker", re.IGNORECASE)
     params = params.sub("", command)
-    module = open("%slinuxprivchecker.py" % ModulesDirectory, 'rb').read()
-    encoded_module = base64.b64encode(module).decode("utf-8")
-    taskcmd = "linuxprivchecker -pycode %s %s" % (encoded_module, params)
+    taskcmd = python_prep_module("linuxprivchecker", params)
+    new_task(taskcmd, user, randomuri)
+
+
+def do_mimipenguin(user, command, randomuri):
+    params = re.compile("mimipenguin", re.IGNORECASE)
+    params = params.sub("", command)
+    taskcmd = python_prep_module("mimipenguin", params)
     new_task(taskcmd, user, randomuri)
 
 

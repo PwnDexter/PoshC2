@@ -14,7 +14,7 @@ from poshc2.server.payloads.Payloads import Payloads
 from poshc2.server.Config import PoshProjectDirectory, ServerHeader, PayloadsDirectory, GET_404_Response, DownloadsDirectory, Database, PayloadCommsHost, SocksHost
 from poshc2.server.Config import QuickCommand, KillDate, DefaultSleep, DomainFrontHeader, urlConfig, BindIP, BindPort
 from poshc2.server.Config import DownloadURI, URLS, SocksURLS, Insecure, UserAgent, Referrer, Pushover_APIToken
-from poshc2.server.Config import Pushover_APIUser, Slack_UserID, Slack_Channel, Slack_BotToken, EnableNotifications, DatabaseType 
+from poshc2.server.Config import Pushover_APIUser, Slack_UserID, Slack_Channel, Slack_BotToken, EnableNotifications, DatabaseType
 from poshc2.server.Cert import create_self_signed_cert
 from poshc2.client.Help import logopic
 from poshc2.Utils import validate_sleep_time, randomuri, gen_key
@@ -158,6 +158,12 @@ class MyHandler(BaseHTTPRequestHandler):
                     implant_type = "Python Daisy"
                 if self.path == ("%s?p?m" % new_implant_url):
                     implant_type = "Python Proxy"
+                if self.path == ("%s?r" % new_implant_url):
+                    implant_type = "Python3"
+                if self.path == ("%s?d?r" % new_implant_url):
+                    implant_type = "Python3 Daisy"
+                if self.path == ("%s?p?r" % new_implant_url):
+                    implant_type = "Python3 Proxy"
                 if self.path == ("%s?c" % new_implant_url):
                     implant_type = "C#"
                 if self.path == ("%s?d?c" % new_implant_url):

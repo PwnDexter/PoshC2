@@ -47,8 +47,10 @@ def get_implant_type_prompt_prefix(implant_id):
         pivot = "PS"
     elif pivot_original.startswith("C#"):
         pivot = "C#"
-    elif pivot_original.startswith("Python"):
-        pivot = "PY"
+    elif pivot_original.startswith("Python2"):
+        pivot = "PY2"
+    elif pivot_original.startswith("Python3"):
+        pivot = "PY3"
     if "Daisy" in pivot_original:
         pivot = pivot + ";D"
     if "Proxy" in pivot_original:

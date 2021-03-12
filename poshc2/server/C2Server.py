@@ -153,11 +153,11 @@ class MyHandler(BaseHTTPRequestHandler):
                 if self.path == ("%s?d" % new_implant_url):
                     implant_type = "PS Daisy"
                 if self.path == ("%s?m" % new_implant_url):
-                    implant_type = "Python"
+                    implant_type = "Python2"
                 if self.path == ("%s?d?m" % new_implant_url):
-                    implant_type = "Python Daisy"
+                    implant_type = "Python2 Daisy"
                 if self.path == ("%s?p?m" % new_implant_url):
-                    implant_type = "Python Proxy"
+                    implant_type = "Python2 Proxy"
                 if self.path == ("%s?r" % new_implant_url):
                     implant_type = "Python3"
                 if self.path == ("%s?d?r" % new_implant_url):
